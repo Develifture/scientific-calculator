@@ -6,8 +6,6 @@
 ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-f7df1e.svg)
 ![No build step](https://img.shields.io/badge/build-none-brightgreen.svg)
 
-### ▶ [Try the live demo](https://develifture.github.io/scientific-calculator/)
-
 ![Calculator in dark theme with scientific keys and history](docs/screenshots/calculator-dark.png)
 
 ## What is it?
@@ -68,7 +66,7 @@ npm start    # serves src/ at http://localhost:5173
 npm test     # node --test
 ```
 
-You can also host the `src/` folder on any static web server. The live demo is served by GitHub Pages from the `gh-pages` branch, which holds a copy of `src/`.
+You can also open `src/` from any static web server.
 
 ## Project structure
 

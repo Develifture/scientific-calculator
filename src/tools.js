@@ -1,4 +1,4 @@
-// Pure logic for the Pro tool panels (units, bases, matrices, stats, solver). No DOM.
+// Pure logic for the tool panels (units, bases, matrices, stats, solver). No DOM.
 import { math, format, rawEvaluate } from './engine.js';
 
 // ---- Units ----

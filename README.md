@@ -13,19 +13,18 @@
 
 ## What is it?
 
-Calc is a scientific calculator, graphing tool and small math workbench in one web page. You type an expression the way you would write it (`2π`, `3(4+1)`, `sin(30)`, `f(x) = x^2 + 1`) and see the result as you type. It is built on [math.js](https://mathjs.org/) and plain HTML, CSS and JavaScript.
-
-It also includes a **demo "Pro" tier** with a fake paywall. It shows how to split free and paid features in a front-end app, with all paywall logic in one small module that can later be replaced by a real payment provider. Nothing is ever charged.
+Calc is a scientific calculator, graphing tool and small math workbench in one web page. You type an expression the way you would write it (`2π`, `3(4+1)`, `sin(30)`, `f(x) = x^2 + 1`) and see the result as you type. It is built on [math.js](https://mathjs.org/) and plain HTML, CSS and JavaScript. Every feature is free.
 
 ## Who is it for?
 
 - **Students** (high school and university) who need trig, logs, complex numbers, matrices, statistics and function plots without buying a graphing calculator or installing software.
 - **Engineers, developers and scientists** who want quick unit conversion, physical constants, bitwise operations and BIN/OCT/DEC/HEX conversion in a browser tab.
 - **Teachers** who want to project a clean, readable calculator and graph in class.
-- **Front-end developers** who want a readable reference project: a real app in about 1,000 lines of framework-free JavaScript, with tests, keyboard and screen-reader support, a strict Content Security Policy, and a freemium paywall pattern.
+- **Front-end developers** who want a readable reference project: a real app in under 1,000 lines of framework-free code, with tests, keyboard and screen-reader support, and a strict Content Security Policy.
 
 ## Why use it?
 
+- **Free, no strings.** No account, no ads, no paid tier.
 - **Nothing to install.** Open the link on a phone, tablet or desktop.
 - **Private and offline.** No backend, no tracking, no third-party scripts. math.js ships in the repo, so the page works without internet once it is loaded.
 - **Natural input.** Implicit multiplication, live preview, full keyboard control, history you can click to reuse.
@@ -33,22 +32,21 @@ It also includes a **demo "Pro" tier** with a fake paywall. It shows how to spli
 
 ## Features
 
-| Free | Pro (demo unlock, no payment) |
-| --- | --- |
-| Arithmetic, `%`, `±`, parentheses | Trig, inverse and hyperbolic functions, DEG / RAD / GRAD |
-| Live result preview, implicit multiplication | `log`, `ln`, `log₂`, powers, roots, `n!`, `mod` |
-| Memory: MC, MR, M+, M− | Constants: π, e, φ, c, h, G, Nₐ, k; complex numbers |
-| History of the last 20 results | Function graphing with zoom, pan and trace |
-| Keyboard support | Matrices: add, multiply, determinant, inverse, transpose |
-| Light and dark theme | Statistics and linear regression |
-| | Polynomial roots and linear systems |
-| | Unit conversion; BIN/OCT/DEC/HEX and bitwise ops |
-| | Variables and user functions (`a = 4`, `f(x) = x^2 + 1`) |
-| | Unlimited history with CSV export |
+- **Everyday math:** arithmetic, `%`, `±`, parentheses, live result preview, implicit multiplication (`2π`, `3(4+1)`)
+- **Scientific:** trig, inverse and hyperbolic functions with DEG / RAD / GRAD; `log`, `ln`, `log₂`, powers, roots, `n!`, `|x|`, `mod`
+- **Constants and complex numbers:** π, e, φ, c, h, G, Nₐ, k and `i`
+- **Graphing:** plot `f(x)` with zoom, pan and trace
+- **Matrices:** add, multiply, determinant, inverse, transpose
+- **Statistics:** mean, median, variance, standard deviation, linear regression
+- **Solver:** polynomial roots and systems of linear equations
+- **Conversion:** units (length, mass, temperature, time, data) and BIN / OCT / DEC / HEX with bitwise operators
+- **Variables and functions:** `a = 4`, `f(x) = x^2 + 1`
+- **Memory and history:** MC, MR, M+, M−; unlimited history, click to reuse, export as CSV or copy
+- **Light and dark theme**, keyboard control, responsive layout for phone, tablet and desktop
 
 ![Graphing a cubic function in light theme](docs/screenshots/graph-light.png)
 
-<p align="center"><img src="docs/screenshots/free-mobile.png" alt="Free tier on a phone-sized screen" width="260"></p>
+<p align="center"><img src="docs/screenshots/mobile.png" alt="Calculator on a phone-sized screen" width="260"></p>
 
 ## Keyboard
 
@@ -68,7 +66,7 @@ git clone https://github.com/Develifture/scientific-calculator.git
 cd scientific-calculator
 npm install
 npm start    # serves src/ at http://localhost:5173
-npm test     # node --test, 24 tests
+npm test     # node --test
 ```
 
 You can also host the `src/` folder on any static web server. Every push to `main` runs the tests and deploys `src/` to GitHub Pages.
@@ -80,21 +78,14 @@ src/
   index.html   page shell, strict CSP
   app.js       keypad, keyboard, history, memory, theme
   engine.js    math.js wrapper: parsing, angle modes, formatting, scope
-  panels.js    Pro tool tabs (graph, matrix, stats, solve, units, base)
+  panels.js    tool tabs (graph, matrix, stats, solve, units, base)
   tools.js     pure math helpers for the panels
   graph.js     canvas plotter with zoom, pan and trace
-  paywall.js   the fake paywall: isPro(), unlock(), reset()
   vendor/      bundled math.js (Apache-2.0)
-tests/         node:test suites for engine and paywall
+tests/         node:test suite for the engine
 ```
 
 math.js is vendored in `src/vendor/math.js` (copied from `node_modules/mathjs/lib/browser/math.js`), so the page loads no third-party scripts. After upgrading mathjs, copy the bundle again.
-
-## About the Pro paywall
-
-The Pro tier is a **client-side demo only**. "Unlock Pro" waits briefly and then sets a flag in `localStorage`. Nothing is charged, no payment details are collected, and anyone can bypass the flag. "Reset to Free" turns it off again.
-
-All paywall logic lives in `src/paywall.js`. To make it real, replace that module with a real checkout (for example Stripe Checkout) and check entitlement on a server.
 
 ## Contributing
 

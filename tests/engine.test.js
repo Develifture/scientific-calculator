@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluate, needsPro, setAngle, resetScope, compileFn } from '../src/engine.js';
+import { evaluate, setAngle, resetScope, compileFn } from '../src/engine.js';
 import { convertUnit, convertBase, matrixOp, stats, regression, polyRoots, solveSystem } from '../src/tools.js';
 
 const t = (e) => evaluate(e).text;
@@ -23,11 +23,6 @@ test('errors are readable, never crash', () => {
   assert.throws(() => evaluate('(2+3'), /parenthesis/i);
   assert.throws(() => evaluate('1/0'), /finite/);
   assert.throws(() => evaluate('foo+1'), /Unknown name "foo"/);
-});
-
-test('free vs pro gating', () => {
-  for (const e of ['1+2×3', '(4)÷2', '2π', '50%', 'ans+1']) assert.equal(needsPro(e), false, e);
-  for (const e of ['sin(1)', '2^3', '√4', 'x=5', '5 mod 2', '5!', 'e']) assert.equal(needsPro(e), true, e);
 });
 
 test('angle modes', () => {
@@ -97,7 +92,6 @@ test('solver', () => {
 test('review fixes: percent, exponent results, constants, trig extras', () => {
   assert.equal(t('5%3'), '2');
   assert.equal(t('.5%'), '0.005');
-  assert.equal(needsPro('1e+14×2'), false);
   assert.throws(() => evaluate('pi = 3'), /constant/);
   assert.throws(() => evaluate('1/0 + i'), /finite/);
   setAngle('deg');

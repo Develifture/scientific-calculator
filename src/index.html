@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calc Pro</title>
-  <meta name="description" content="A modern scientific calculator with a demo Pro tier.">
+  <title>Calc</title>
+  <meta name="description" content="A modern scientific and graphing calculator that runs in the browser.">
   <!-- CSP hashes cover the two inline scripts below byte-for-byte (LF-normalized by the HTML parser). Recompute if either changes. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-XpQg0CSjQge+3jqeR/xQJw21xvwItEclXC7pnn3gA9o=' 'sha256-Aaty4Ft/rA4yG+IpCU4frHODaCjUzTHQMl2g4gjfaCk='; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="icon" href="data:,">
@@ -24,18 +24,16 @@
 <body>
   <div class="aurora" aria-hidden="true"></div>
   <header class="top">
-    <h1>Calc<span class="badge" id="badge" hidden>Pro</span></h1>
+    <h1>Calc</h1>
     <div class="top-actions">
-      <button id="upgrade" class="pill primary">Upgrade to Pro</button>
-      <button id="reset" class="pill ghost" hidden>Reset to Free</button>
-      <button id="theme" class="pill ghost" aria-label="Toggle light and dark theme">Theme</button>
+      <button id="theme" class="pill" aria-label="Toggle light and dark theme">Theme</button>
     </div>
   </header>
 
   <main class="layout">
     <section class="glass calc" aria-label="Calculator">
       <div class="display">
-        <div class="annun" aria-hidden="true"><span id="an-angle" class="on">DEG</span><span id="an-mem">M</span><span id="an-pro">PRO</span></div>
+        <div class="annun" aria-hidden="true"><span id="an-angle" class="on">DEG</span><span id="an-mem">M</span></div>
         <label class="sr" for="expr">Expression</label>
         <input id="expr" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
                inputmode="text" placeholder="Type or tap an expression" aria-describedby="result">
@@ -62,7 +60,7 @@
     </aside>
   </main>
 
-  <section class="glass tools" aria-label="Pro tools">
+  <section class="glass tools" aria-label="Tools">
     <div class="tabs" id="tabs" role="tablist"></div>
     <div id="panel"></div>
   </section>

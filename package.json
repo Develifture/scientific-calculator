@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Browser scientific calculator with graphing, matrices, stats and a demo Pro tier, built on math.js.",
+  "description": "Browser scientific and graphing calculator with matrices, stats and an equation solver, built on math.js.",
   "type": "module",
   "engines": {
     "node": ">=18"

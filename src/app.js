@@ -1,6 +1,5 @@
-// UI wiring: keypad, keyboard, history, memory, theme, paywall locks.
-import { evaluate, needsPro, setAngle, getAngle, getScope, resetScope, math, format } from './engine.js';
-import { isPro, reset, showUpgrade } from './paywall.js';
+// UI wiring: keypad, keyboard, history, memory, theme.
+import { evaluate, setAngle, getAngle, getScope, math, format } from './engine.js';
 import { initPanels } from './panels.js';
 
 const $ = (id) => document.getElementById(id);
@@ -33,15 +32,13 @@ const SCI = {
   Constants: [['π', 'π'], ['e', 'e'], ['φ', 'φ'], ['c', 'c'], ['h', 'h'], ['G', 'G'], ['Nₐ', 'Na'], ['k', 'k'], ['i', 'i']],
   'Complex, bases and bitwise': [['0b', '0b'], ['0o', '0o'], ['0x', '0x'], ['AND', ' AND '], ['OR', ' OR '], ['XOR', ' XOR '], ['NOT', 'NOT '], ['<<', ' << '], ['>>', ' >> '], ['=', ' = ']],
 };
-// π is free (implicit multiplication such as 2π); everything else in SCI is Pro.
 
-function keyButton([label, act, aria, cls = ''], locked = false) {
+function keyButton([label, act, aria, cls = '']) {
   const b = document.createElement('button');
   b.type = 'button';
-  b.className = `k ${cls} ${locked ? 'locked' : ''}`.trim();
+  b.className = `k ${cls}`.trim();
   b.textContent = label;
-  b.setAttribute('aria-label', locked ? `${aria || label}, Pro feature, locked` : aria || label);
-  if (locked) b.setAttribute('aria-disabled', 'true');
+  b.setAttribute('aria-label', aria || label);
   b.dataset.act = act;
   b.dataset.name = aria || label;
   return b;
@@ -54,13 +51,12 @@ function buildKeys() {
     if (i < 4) b.setAttribute('aria-keyshortcuts', `Alt+${i + 1}`);
     return b;
   }));
-  const pro = isPro();
   const sci = $('scikeys');
   sci.replaceChildren();
   for (const [title, keys] of Object.entries(SCI)) {
     const h = document.createElement('h3'); h.textContent = title;
     const g = document.createElement('div'); g.className = 'kgrid';
-    g.replaceChildren(...keys.map(([l, ins]) => keyButton([l, ins, l, 'fn'], !pro && l !== 'π')));
+    g.replaceChildren(...keys.map(([l, ins]) => keyButton([l, ins, l, 'fn'])));
     sci.append(h, g);
   }
   const angle = $('angle');
@@ -68,7 +64,6 @@ function buildKeys() {
     const b = document.createElement('button');
     b.type = 'button'; b.role = 'radio'; b.dataset.angle = m; b.textContent = m.toUpperCase();
     b.setAttribute('aria-checked', String(getAngle() === m));
-    if (!pro) { b.className = 'locked'; b.setAttribute('aria-disabled', 'true'); }
     return b;
   }));
 }
@@ -93,14 +88,12 @@ function setResult(text, cls = '') {
 
 function preview() {
   if (!expr.value.trim()) return setResult('0');
-  if (needsPro(expr.value) && !isPro()) return setResult('Pro', '');
   try { setResult(evaluate(expr.value, false).text || '0'); } catch { /* incomplete input: keep last preview */ }
 }
 
 function commit() {
   const src = expr.value.trim();
   if (!src) return;
-  if (!isPro() && needsPro(src)) return showUpgrade('Scientific functions', refresh);
   try {
     const { text } = evaluate(src);
     setResult(text, 'final pop');
@@ -113,7 +106,6 @@ function commit() {
 }
 
 function currentValue() {
-  if (!isPro() && needsPro(expr.value)) return NaN;
   try { return math.number(evaluate(expr.value || '0', false).value); } catch { return NaN; }
 }
 
@@ -152,7 +144,6 @@ function act(a) {
 // ---- History ----
 function addHistory(e, r) {
   history.push({ e, r });
-  if (!isPro()) history = history.slice(-20);
   safeSet('history', JSON.stringify(history));
   renderHistory();
 }
@@ -163,9 +154,8 @@ function historyCsv() {
 }
 
 function renderHistory() {
-  const list = isPro() ? history : history.slice(-20);
-  $('histempty').hidden = list.length > 0;
-  $('history').replaceChildren(...list.slice().reverse().map((h) => {
+  $('histempty').hidden = history.length > 0;
+  $('history').replaceChildren(...history.slice().reverse().map((h) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
     b.type = 'button';
@@ -180,10 +170,9 @@ function renderHistory() {
 }
 
 function renderHistTools() {
-  const pro = isPro();
   const mk = (label, fn) => {
-    const b = keyButton([label, label, `${label} history`], !pro);
-    b.addEventListener('click', () => (pro ? fn() : showUpgrade('History export', refresh)));
+    const b = keyButton([label, label, `${label} history`]);
+    b.addEventListener('click', fn);
     return b;
   };
   $('histtools').replaceChildren(
@@ -207,30 +196,15 @@ function renderDefined() {
 function annunciators() {
   $('an-angle').textContent = getAngle().toUpperCase();
   $('an-mem').classList.toggle('on', memory !== 0);
-  $('an-pro').classList.toggle('on', isPro());
-}
-
-function refresh() {
-  const pro = isPro();
-  annunciators();
-  $('badge').hidden = !pro;
-  $('upgrade').hidden = pro;
-  $('reset').hidden = !pro;
-  buildKeys();
-  renderHistTools();
-  renderHistory();
-  panels.refresh();
 }
 
 document.addEventListener('click', (e) => {
   const k = e.target.closest('.k[data-act]');
   if (k && k.closest('#keys, #memrow, #scikeys')) {
-    if (k.getAttribute('aria-disabled') === 'true') return showUpgrade(k.dataset.name, refresh);
     return act(k.dataset.act);
   }
   const a = e.target.closest('#angle button');
   if (a) {
-    if (!isPro()) return showUpgrade('Angle modes', refresh);
     setAngle(a.dataset.angle);
     for (const b of $('angle').children) b.setAttribute('aria-checked', String(b === a));
     annunciators();
@@ -251,8 +225,6 @@ document.addEventListener('keydown', (e) => {
   if (!editing && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) expr.focus();
 });
 
-$('upgrade').addEventListener('click', () => showUpgrade('', refresh));
-$('reset').addEventListener('click', () => { reset(); resetScope(); renderDefined(); history = history.slice(-20); refresh(); });
 $('theme').addEventListener('click', () => {
   const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = t;
@@ -260,7 +232,10 @@ $('theme').addEventListener('click', () => {
   panels.redraw();
 });
 
-const panels = initPanels($('tabs'), $('panel'), refresh);
-refresh();
+const panels = initPanels($('tabs'), $('panel'));
+annunciators();
+buildKeys();
+renderHistTools();
+renderHistory();
 renderDefined();
 expr.focus();

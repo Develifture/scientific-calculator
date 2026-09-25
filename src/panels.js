@@ -1,5 +1,4 @@
-// Pro tool panels: tabs, gating and DOM for graph, matrix, stats, solver, units, base.
-import { isPro, showUpgrade } from './paywall.js';
+// Tool panels: tabs and DOM for graph, matrix, stats, solver, units, base.
 import { createGraph } from './graph.js';
 import { UNITS, convertUnit, convertBase, MATRIX_OPS, matrixOp, stats, regression, polyRoots, solveSystem } from './tools.js';
 import { format } from './engine.js';
@@ -76,7 +75,7 @@ const TABS = {
   },
 };
 
-export function initPanels(tabsEl, panelEl, onChange) {
+export function initPanels(tabsEl, panelEl) {
   let active = null, graph = null;
   const PANE_ID = 'tool-pane', tabId = (name) => `tab-${name.toLowerCase()}`;
 
@@ -88,32 +87,28 @@ export function initPanels(tabsEl, panelEl, onChange) {
     const pane = document.createElement('div');
     pane.id = PANE_ID;
     pane.setAttribute('role', 'tabpanel');
-    if (isPro() && name) pane.setAttribute('aria-labelledby', tabId(name));
+    pane.setAttribute('aria-labelledby', tabId(name));
     panelEl.append(pane);
-    if (!isPro()) { pane.innerHTML = '<p class="pane-empty">Choose a tool to get started. All tools are part of Pro.</p>'; }
-    else if (name) graph = TABS[name](pane) || null;
+    graph = TABS[name](pane) || null;
     paintTabs();
     if (hadFocus) tabsEl.querySelector('[tabindex="0"]')?.focus();
   }
 
   function paintTabs() {
-    const pro = isPro();
     const names = Object.keys(TABS);
-    const current = pro && names.includes(active) ? active : names[0];
     tabsEl.replaceChildren(...names.map((name) => {
       const b = document.createElement('button');
       b.type = 'button'; b.role = 'tab'; b.textContent = name; b.id = tabId(name);
-      b.className = `tab ${pro ? '' : 'locked'}`.trim();
-      b.setAttribute('aria-selected', String(pro && active === name));
+      b.className = 'tab';
+      b.setAttribute('aria-selected', String(active === name));
       b.setAttribute('aria-controls', PANE_ID);
-      b.tabIndex = name === current ? 0 : -1; // roving tabindex
-      if (!pro) { b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-label', `${name}, Pro feature, locked`); }
-      b.addEventListener('click', () => (pro ? select(name) : showUpgrade(name, () => { onChange(); select(name); })));
+      b.tabIndex = name === active ? 0 : -1; // roving tabindex
+      b.addEventListener('click', () => select(name));
       return b;
     }));
   }
 
-  // Arrow keys move focus between tabs; Enter/Space activates (manual activation, so locked tabs don't pop the paywall).
+  // Arrow keys move focus between tabs; Enter/Space activates (manual activation).
   tabsEl.addEventListener('keydown', (e) => {
     const tabs = [...tabsEl.querySelectorAll('[role=tab]')];
     const i = tabs.indexOf(document.activeElement);
@@ -126,9 +121,6 @@ export function initPanels(tabsEl, panelEl, onChange) {
     tabs[next].focus();
   });
 
-  return {
-    // Called after unlock or reset. Falls back to first tab when Pro, empty state otherwise.
-    refresh() { select(isPro() ? active || 'Graph' : null); },
-    redraw() { graph?.redraw?.(); },
-  };
+  select('Graph');
+  return { redraw() { graph?.redraw?.(); } };
 }

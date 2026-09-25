@@ -1,5 +1,5 @@
 /* Design: a desk calculator in the Braun / Casio tradition. Tactile keys, a real LCD-style display
-   with annunciators, glass only for the frame. Amber is the single accent (equals, focus, Pro). */
+   with annunciators, glass only for the frame. Amber is the single accent (equals, focus). */
 :root {
   --bg: #14151a; --grid: rgba(255, 255, 255, .035);
   --text: #ecebe6; --muted: #8f929c; --rule: rgba(255, 255, 255, .09);
@@ -8,7 +8,7 @@
   --key-num: #383a41; --key-num-top: #42444c; --key-fn: #22242a; --key-fn-top: #2a2c33; --key-shadow: #0b0c0f;
   --key-text: #f1f0eb; --key-fn-text: #b4b8c4;
   --accent: #f5a524; --on-accent: #1d1200; --accent-top: #ffbb4d; --accent-shadow: #a86a00;
-  --danger: #ff8f8f; --axis: rgba(247, 197, 106, .55); --plot: #f7c56a; --focus: var(--accent); --lock-c: var(--accent); --plot: var(--accent);
+  --danger: #ff8f8f; --axis: rgba(247, 197, 106, .55); --plot: #f7c56a; --focus: var(--accent); --plot: var(--accent);
   --shadow: 0 30px 60px -20px rgba(0, 0, 0, .6);
 }
 :root[data-theme="light"] {
@@ -19,7 +19,7 @@
   --key-num: #fbfaf7; --key-num-top: #ffffff; --key-fn: #d6d4cc; --key-fn-top: #e2e0d9; --key-shadow: #a7a49a;
   --key-text: #1c1e24; --key-fn-text: #3d4050;
   --accent: #e8890c; --on-accent: #1d1200; --accent-top: #f39a26; --accent-shadow: #a55b00;
-  --danger: #b3202f; --axis: rgba(28, 32, 23, .6); --plot: #12351f; --focus: #9a5200; --lock-c: #9a5200; --plot: #9a5200;
+  --danger: #b3202f; --axis: rgba(28, 32, 23, .6); --plot: #12351f; --focus: #9a5200; --plot: #9a5200;
   --shadow: 0 24px 50px -24px rgba(60, 55, 40, .45);
 }
 
@@ -45,12 +45,8 @@ button, input, select { font: inherit; color: inherit; }
 /* header */
 .top { max-width: 1240px; margin: 0 auto 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .top-actions { display: flex; gap: 8px; }
-.badge { font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--accent); color: var(--on-accent); letter-spacing: .04em; }
 .pill { border: 1px solid var(--rule); border-radius: 10px; padding: 8px 14px; cursor: pointer; background: transparent; transition: background .15s; }
 .pill:hover { background: var(--panel); }
-.primary { background: var(--accent); color: var(--on-accent); border: 0; font-weight: 600; border-radius: 10px; }
-.pill.primary:hover { background: var(--accent-top); }
-.primary:disabled { opacity: .6; cursor: progress; }
 
 /* panels */
 .glass {
@@ -103,12 +99,6 @@ button, input, select { font: inherit; color: inherit; }
 .memrow .k { min-height: 34px; font-size: .78rem; font-weight: 600; border-radius: 9px; box-shadow: 0 2px 0 var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, .08); }
 .k.eq { grid-column: 1 / -1; background: linear-gradient(var(--accent-top), var(--accent)); color: var(--on-accent); font-weight: 700; font-size: 1.5rem; box-shadow: 0 3px 0 var(--accent-shadow), 0 8px 14px -6px var(--accent); }
 .k.on { color: var(--accent); box-shadow: 0 2px 0 var(--key-shadow), inset 0 0 0 1.5px var(--accent); }
-.k.locked { box-shadow: 0 1px 0 var(--key-shadow), inset 0 1px 0 rgba(255, 255, 255, .06); }
-.k.locked::after, .tab.locked::after {
-  content: ""; position: absolute; top: 5px; right: 6px; width: 8px; height: 10px; background: var(--lock-c);
-  -webkit-mask: var(--lock) center / contain no-repeat; mask: var(--lock) center / contain no-repeat;
-}
-:root { --lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 12'%3E%3Cpath d='M2 5V3.5a3 3 0 016 0V5h.5A1.5 1.5 0 0110 6.5v4A1.5 1.5 0 018.5 12h-7A1.5 1.5 0 010 10.5v-4A1.5 1.5 0 011.5 5zM3.5 5h3V3.5a1.5 1.5 0 00-3 0z'/%3E%3C/svg%3E"); }
 .hint { margin: 14px 0 0; font-size: .72rem; color: var(--muted); text-align: center; }
 
 /* scientific panel */
@@ -123,7 +113,6 @@ button, input, select { font: inherit; color: inherit; }
 .hist-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--rule); }
 .hist-tools { display: flex; gap: 6px; }
 .hist-tools .k { min-height: 28px; font-size: .72rem; padding: 0 12px; border-radius: 8px; box-shadow: 0 2px 0 var(--key-shadow); }
-.hist-tools .k::after { top: 3px !important; right: 3px !important; }
 .history ol { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow-y: auto; }
 .history li + li { border-top: 1px solid var(--rule); }
 .history li button { width: 100%; text-align: right; border: 0; background: transparent; padding: 10px 6px; border-radius: 8px; cursor: pointer; }
@@ -138,9 +127,7 @@ button, input, select { font: inherit; color: inherit; }
 .tab:hover { color: var(--text); }
 .tab[aria-selected="true"] { color: var(--text); font-weight: 600; }
 .tab[aria-selected="true"]::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); }
-.tab.locked::after { top: 6px; right: -10px; }
 @media (max-width: 480px) { .tabs { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; } .row .k { flex: 1 1 auto; } }
-.pane-empty { color: var(--muted); padding: 8px 0; margin: 0; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 12px; }
 .row .k { min-height: 40px; font-size: .9rem; }
 .k.tool-btn { padding: 0 18px; }
@@ -156,25 +143,10 @@ button, input, select { font: inherit; color: inherit; }
 canvas { width: 100%; height: min(60vh, 420px); border-radius: 12px; background: var(--lcd); touch-action: none; cursor: crosshair; display: block; box-shadow: inset 0 1px 6px var(--lcd-edge); }
 .trace { font-size: .8rem; color: var(--muted); margin: 8px 0 0; min-height: 1.4em; }
 
-/* upgrade modal */
-dialog.upgrade { border: 1px solid var(--panel-edge); border-radius: 20px; padding: 28px; max-width: 400px; width: calc(100% - 32px); background: var(--bg); color: var(--text); box-shadow: var(--shadow); }
-dialog.upgrade[open] { animation: pop .22s ease-out; }
-dialog.upgrade::backdrop { background: rgba(6, 7, 10, .65); backdrop-filter: blur(3px); }
-.upgrade h2 { font-size: 1.35rem; margin-bottom: 4px; }
-.upgrade ul { padding: 0; margin: 14px 0; list-style: none; border-top: 1px solid var(--rule); }
-.upgrade li { padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: .9rem; }
-.up-price { font-size: 2rem; font-weight: 700; letter-spacing: -.03em; margin: 12px 0 2px; }
-.up-note, .up-sub { color: var(--muted); font-size: .8rem; margin: 2px 0; }
-.up-status { min-height: 1.4em; color: var(--accent); font-weight: 600; font-size: .9rem; }
-.up-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
-.up-actions button { padding: 10px 18px; border-radius: 10px; border: 1px solid var(--rule); cursor: pointer; background: transparent; }
-.up-actions .primary { border: 0; background: var(--accent); color: var(--on-accent); }
-.up-actions .primary:hover:not(:disabled) { background: var(--accent-top); }
-.up-actions .ghost:hover { background: var(--panel); }
 
 /* phones and touch: 44px minimum hit targets */
 @media (max-width: 480px), (pointer: coarse) {
-  .pill, .up-actions button, .row .k, .memrow .k, .hist-tools .k, .seg button, .tab, .field input, .field select, #expr { min-height: 44px; }
+  .pill, .row .k, .memrow .k, .hist-tools .k, .seg button, .tab, .field input, .field select, #expr { min-height: 44px; }
   .tab { min-width: 44px; }
   .k.fn { min-height: 48px; }
 }

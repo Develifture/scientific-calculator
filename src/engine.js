@@ -52,10 +52,6 @@ export function normalize(expr) {
     .trim();
 }
 
-// Free tier allows only arithmetic, parentheses, %, ans, pi. Anything else is Pro.
-const FREE_RE = /^(?:\d+(?:\.\d*)?(?:e[+-]?\d+)?|[\s.+\-*/()%]|ans|pi)*$/;
-export const needsPro = (expr) => !FREE_RE.test(normalize(expr));
-
 const MAX_DIGITS = 12;
 export function format(v) {
   if (v === undefined || v === null) return '';

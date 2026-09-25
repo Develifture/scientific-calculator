@@ -24,3 +24,7 @@ math.js is vendored in `src/vendor/math.js` (copied from `node_modules/mathjs/li
 ## Pro / paywall
 
 The Pro tier is a **client-side demo only**. "Unlock Pro" sets a flag in `localStorage`. Nothing is charged, no payment details are collected, and the flag is trivially bypassed. A real product needs server-side checkout and entitlement checks.
+
+## License
+
+[MIT](LICENSE). The vendored math.js bundle in `src/vendor/` is Apache-2.0; its notices are in `src/vendor/math.js.LICENSE.txt`.

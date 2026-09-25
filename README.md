@@ -112,7 +112,7 @@ math.js is vendored in `src/vendor/math.js` (copied from `node_modules/mathjs/li
 Yes. Every feature is free, and the code is MIT-licensed.
 
 **Does it work offline?**
-Yes, once the page is loaded. math.js is bundled in the repo, and the app makes no network requests.
+Yes. After the first visit, a service worker keeps a copy of the app, so it opens, reloads and saves history with no connection. math.js is bundled in the repo, and the app makes no requests to other servers.
 
 **Can I use it on my phone?**
 Yes. The layout adapts to phone, tablet and desktop screens.

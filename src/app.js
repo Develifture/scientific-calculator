@@ -239,3 +239,5 @@ renderHistTools();
 renderHistory();
 renderDefined();
 expr.focus();
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { /* offline reload unavailable */ });

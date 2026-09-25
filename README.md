@@ -1,6 +1,6 @@
-# Calc — Scientific Calculator for the Browser
+# Calc — Free Scientific & Graphing Calculator (Open Source, Browser-Based)
 
-**A fast, offline-capable scientific and graphing calculator that runs in any modern browser. No install, no account, no build step.**
+**A free, open-source scientific and graphing calculator with an equation solver, matrices and statistics. It runs in any modern browser, works offline, and needs no account and no build step.**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-f7df1e.svg)
@@ -22,7 +22,7 @@ Calc is a scientific calculator, graphing tool and small math workbench in one w
 ## Why use it?
 
 - **Free, no strings.** No account, no ads, no paid tier.
-- **Nothing to install.** Open the link on a phone, tablet or desktop.
+- **No build step.** Serve the `src/` folder with any static web server. No bundler, no framework.
 - **Private and offline.** No backend, no tracking, no third-party scripts. math.js ships in the repo, so the page works without internet once it is loaded.
 - **Natural input.** Implicit multiplication, live preview, full keyboard control, history you can click to reuse.
 - **More than a calculator.** Graphing, matrices, statistics, regression, equation solving and unit conversion in the same page.
@@ -44,6 +44,28 @@ Calc is a scientific calculator, graphing tool and small math workbench in one w
 ![Graphing a cubic function in light theme](docs/screenshots/graph-light.png)
 
 <p align="center"><img src="docs/screenshots/mobile.png" alt="Calculator on a phone-sized screen" width="260"></p>
+
+## Examples
+
+Type these into the calculator (angle mode DEG). The results come from the app's own engine.
+
+| Input | Result |
+| --- | --- |
+| `sin(30)` | `0.5` |
+| `2^10` | `1024` |
+| `(3+4i)(2-i)` | `10 + 5i` |
+| `f(x) = x^2 + 1`, then `f(3)` | `10` |
+
+In the tool tabs:
+
+| Tool | Input | Result |
+| --- | --- | --- |
+| Matrix | `det A` with A = `[[1,2],[3,4]]` | `-2` |
+| Solve | polynomial coefficients `1 -3 2` (x² − 3x + 2 = 0) | `x1 = 1`, `x2 = 2` |
+| Solve | A = `[[2,1],[1,3]]`, b = `[3,5]` | `x1 = 0.8`, `x2 = 1.4` |
+| Stats | `2, 4, 4, 4, 5, 5, 7, 9` | mean 5, median 4.5 |
+| Units | 100 km to mile | ≈ 62.137 mile |
+| Base | 255 from DEC | BIN 11111111, OCT 377, HEX FF |
 
 ## Keyboard
 
@@ -83,6 +105,20 @@ tests/         node:test suite for the engine
 ```
 
 math.js is vendored in `src/vendor/math.js` (copied from `node_modules/mathjs/lib/browser/math.js`), so the page loads no third-party scripts. After upgrading mathjs, copy the bundle again.
+
+## FAQ
+
+**Is it free?**
+Yes. Every feature is free, and the code is MIT-licensed.
+
+**Does it work offline?**
+Yes, once the page is loaded. math.js is bundled in the repo, and the app makes no network requests.
+
+**Can I use it on my phone?**
+Yes. The layout adapts to phone, tablet and desktop screens.
+
+**Why not Desmos or GeoGebra?**
+Those are mature, full-featured hosted math platforms, and for advanced graphing or geometry they are often the better choice. Calc is small, open source and self-hosted. Pick it if you want one page that combines a scientific calculator, basic graphing and math tools, runs offline, and is simple enough to read and change.
 
 ## Contributing
 

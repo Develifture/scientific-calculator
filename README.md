@@ -2,7 +2,6 @@
 
 **A fast, offline-capable scientific and graphing calculator that runs in any modern browser. No install, no account, no build step.**
 
-[![CI and Pages](https://github.com/Develifture/scientific-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/Develifture/scientific-calculator/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-JS-f7df1e.svg)
 ![No build step](https://img.shields.io/badge/build-none-brightgreen.svg)
@@ -69,7 +68,7 @@ npm start    # serves src/ at http://localhost:5173
 npm test     # node --test
 ```
 
-You can also host the `src/` folder on any static web server. Every push to `main` runs the tests and deploys `src/` to GitHub Pages.
+You can also host the `src/` folder on any static web server. The live demo is served by GitHub Pages from the `gh-pages` branch, which holds a copy of `src/`.
 
 ## Project structure
 

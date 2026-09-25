@@ -1,0 +1,17 @@
+{
+  "name": "scientific-calculator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser scientific calculator with graphing, matrices, stats and a demo Pro tier, built on math.js.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "npx -y serve@14 src -l 5173",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "mathjs": "^13.2.0"
+  }
+}

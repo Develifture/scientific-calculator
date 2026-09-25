@@ -117,8 +117,8 @@ Yes, once the page is loaded. math.js is bundled in the repo, and the app makes 
 **Can I use it on my phone?**
 Yes. The layout adapts to phone, tablet and desktop screens.
 
-**Why not Desmos or GeoGebra?**
-Those are mature, full-featured hosted math platforms, and for advanced graphing or geometry they are often the better choice. Calc is small, open source and self-hosted. Pick it if you want one page that combines a scientific calculator, basic graphing and math tools, runs offline, and is simple enough to read and change.
+**How does it compare to Desmos or GeoGebra?**
+Desmos and GeoGebra are free, mature math tools with web and mobile apps, and they are the better choice for advanced graphing, geometry or 3D. Calc is much smaller. Its advantage is that the whole app is MIT-licensed source code in this repository: you can read it, change it, and host it yourself as static files.
 
 ## Contributing
 
